@@ -1,25 +1,18 @@
 #include <SoftwareSerial.h>
-
+const int analogPorts[] = {A0,A1,A2,A3,A4,A5};
 
 void setup() 
 {
   Serial.begin(9600);
 
 }
+
 void loop() 
 {
-  Serial.print("a0: ");
-  Serial.println(1);
-  Serial.print("a1: ");
-  Serial.println(20);
-  Serial.print("a2: ");
-  Serial.println(300);
-  Serial.print("a3: ");
-  Serial.println(4000);
-  Serial.print("a4: ");
-  Serial.println(599);
-  Serial.print("a5: ");
-  Serial.println(0);
-  delay(100);
+  for(int i = 0; i<sizeof(analogPorts)/sizeof(analogPorts[0]);i++)
+  {
+    Serial.println("a" + String(i) +": " + analogRead(analogPorts[i]));
+  }
+  delay(500); // delay has to be the same as the RPI4
   Serial.flush();
 }
