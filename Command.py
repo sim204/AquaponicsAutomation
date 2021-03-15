@@ -1,5 +1,6 @@
 class Command(ICommand):
-    def __init__(self, subsystem):
+    def __init__(self):
+        self.subsystemList = []
         pass
     def execute():
         pass
@@ -7,3 +8,5 @@ class Command(ICommand):
         pass
     def end(isInterrupt):
         pass
+    def addSubsystem(subsystem):
+        self.subsystemList.append(subsystem)
