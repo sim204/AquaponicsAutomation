@@ -3,7 +3,7 @@ import time
 ANALOGPORTS = 6
 
 class Deserialise:
-    
+    __instance = None
     def __init__(self):
         self.processedData = [None]*ANALOGPORTS
         try:
@@ -25,7 +25,7 @@ class Deserialise:
     """
     Retrieves and refreshes stored values
     """ 
-    def updateValue(self):
+    def update(self):
         rawdata = []
         for i in range(0,ANALOGPORTS+1):
             rawdata.append(str(self.readLine()))
@@ -51,7 +51,6 @@ class Deserialise:
     Prints all value gathered by the serial communication
     """
     def printAll(self):
-        self.updateValue()
         for i in self.processedData:
             print(i)
         #print(self.processedData[0])
@@ -61,18 +60,16 @@ class Deserialise:
     :return value of port
     """
     def readPort(self, port):
-        self.updateValue()
-        return self.processed[port]
-    """
-    :return instance of Deserialise
-    """
-    def getInstance(self):
-        if(self.instance == None)
-            self.instance = Deserialise()
-        return self.instance
+        return self.processedData[port]
+    
+    @staticmethod 
+    def getInstance():
+        if Deserialise.__instance is None:
+            Deserialise.__instance = Deserialise()
+        return Deserialise.__instance
 #test/debug code
 if False:            
-    test = Deserialise()
+    test = Deserialise.getInstance();
 
     while True:
         previousTime =  time.time()
