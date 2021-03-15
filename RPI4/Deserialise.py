@@ -22,7 +22,9 @@ class Deserialise:
             return None
         else:
             return self.arduino.readline()
-        
+    """
+    Retrieves and refreshes stored values
+    """ 
     def updateValue(self):
         rawdata = []
         for i in range(0,ANALOGPORTS+1):
@@ -44,16 +46,32 @@ class Deserialise:
                     j = j + 1
                 
                 self.processedData[index] = num
+    
+    """
+    Prints all value gathered by the serial communication
+    """
     def printAll(self):
         self.updateValue()
         for i in self.processedData:
             print(i)
         #print(self.processedData[0])
+   
+    """
+    :param port port number
+    :return value of port
+    """
     def readPort(self, port):
         self.updateValue()
         return self.processed[port]
+    """
+    :return instance of Deserialise
+    """
+    def getInstance(self):
+        if(self.instance == None)
+            self.instance = Deserialise()
+        return self.instance
 #test/debug code
-if True:            
+if False:            
     test = Deserialise()
 
     while True:
