@@ -1,12 +1,11 @@
 class Command(ICommand):
     def __init__(self):
         self.subsystemList = []
-        pass
     def execute():
-        pass
+        raise NotImplementedError
     def isFinish():
-        pass
+        raise NotImplementedError
     def end(isInterrupt):
-        pass
+        raise NotImplementedError
     def addSubsystem(subsystem):
         self.subsystemList.append(subsystem)

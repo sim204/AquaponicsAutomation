@@ -1,10 +1,7 @@
 class Trigger():
     def __init__(self, command):
         self.command = command
-        pass
-
     def get(value):
-        pass
-
+        raise NotImplementedError
     def getCommand():
         return self.command

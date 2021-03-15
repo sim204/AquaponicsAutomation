@@ -1,7 +1,6 @@
 class Subsystem:
     def __init__(self):
-        pass
-    
+        raise NotImplementedError
     def periodic():
-        pass
+        raise NotImplementedError
 
