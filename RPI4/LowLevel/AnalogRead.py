@@ -1,4 +1,4 @@
-import Deserialise
+from . import Deserialise
 import time
 
 class AnalogRead:

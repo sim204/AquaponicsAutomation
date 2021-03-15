@@ -1,4 +1,4 @@
-class Command(ICommand):
+class Command:
     def __init__(self):
         self.subsystemList = []
         pass
