@@ -5,3 +5,5 @@ class Trigger():
 
     def get(value):
         pass
+    def getCommand():
+        pass
