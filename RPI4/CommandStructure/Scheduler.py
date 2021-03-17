@@ -1,18 +1,19 @@
-from Subsystem import Subsystem
-from Command import Command
-from Trigger import Trigger
+import CommandStructure.Subsystem
+import CommandStructure.Command
+import CommandStructure.Trigger
 
 class Scheduler:
-    _instance = None
+    __instance = None
     def __init__(self):
         self._subsystems = dict()
         self._triggers = []
         self._toBeScheduledCommands = []
         self._scheduledCommands = []
+    @staticmethod
     def getInstance():
-        if self._instance is None:
-            self._instance = Scheduler()
-        return self.instance
+        if Scheduler.__instance is None:
+            Scheduler.__instance = Scheduler()
+        return Scheduler.__instance
 
     def addSubsystem(self, subsystem):
         if subsystem is Subsystem.Subsystem:
