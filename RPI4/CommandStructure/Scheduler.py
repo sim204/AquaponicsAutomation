@@ -1,6 +1,6 @@
-import CommandStructure.Subsystem as Subsystem
-import CommandStructure.Command as Command
-import CommandStructure.Trigger as Trigger
+from CommandStructure.Subsystem import Subsystem
+from CommandStructure.Command import Command
+from CommandStructure.Trigger import Trigger
 
 class Scheduler:
     __instance = None
@@ -16,17 +16,17 @@ class Scheduler:
         return Scheduler.__instance
 
     def addSubsystem(self, subsystem):
-        if isinstance(subsystem, Subsystem.Subsystem.Subsystem):
+        if isinstance(subsystem, Subsystem.Subsystem):
             self._subsystems.update({subsystem:None})
         else:
             print("A non subsystem was attempted to be added to the subsystem list")
     def scheduleCommand(self, command): #logic verified
-        if isinstance(command, Command.Command.Command):
+        if isinstance(command, Command.Command):
             self._toBeScheduledCommands.append(command)
         else:
             print("A non Command was attempted to be scheduled")
     def addTrigger(self,trigger):
-        if isinstance(trigger,Trigger.Trigger.Trigger) and isinstance(trigger.getCommand(), Command.Command.Command) :
+        if isinstance(trigger,Trigger.Trigger) and isinstance(trigger.getCommand(), Command.Command) :
             self._triggers.append(trigger)
         else:
             print("A non Trigger was attempted to be added to the Trigger list")
@@ -45,8 +45,8 @@ class Scheduler:
             self._subsystems[command.getSubsystem()] = None
     
     def removeTrigger(self, trigger):
-        self.removeCommand(trigger.getCommand())
         if trigger in self._triggers:
+            self.removeCommand(trigger.getCommand())
             self._triggers.remove(trigger)
 
     def run(self):
@@ -80,7 +80,7 @@ class Scheduler:
                     commandAlreadyExist = True
                     break
             if not commandAlreadyExist:
-                if isinstance(toBeScheduledCommand.getSubsystem(), Subsystem.Subsystem.Subsystem): #check if Command requires a Subsystem
+                if len(toBeScheduledCommand.getSubsystem()) != 0: #check if Command requires a Subsystem
                     if toBeScheduledCommand in list(self._subsystems.values()): #check if required Subsystem is currently running a Command
                         self.removeCommand(toBeScheduledCommand)
                         self._subsystems[currentSubsystem] = toBeScheduledCommand

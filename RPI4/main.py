@@ -9,7 +9,7 @@ def main():
     instance1 = SchedulerTestCommand.SchedulerTestCommand()
     instance2 = SchedulerTestCommand.SchedulerTestCommand()
     Scheduler.Scheduler.getInstance().scheduleCommand(instance1)
-    
+    Scheduler.Scheduler.getInstance().addSubsystem(None)
 
     for i in range(0,20):
         print(str(i) + ": ")
