@@ -2,15 +2,15 @@ class Command:
     def __init__(self):
         self.subsystemList = []
         pass
-    def initialise():
+    def initialise(self):
         pass
-    def execute():
+    def execute(self):
         pass
-    def isFinish():
+    def isFinish(self):
         pass
-    def end(isInterrupt):
+    def end(self,isInterrupt):
         pass
-    def addSubsystem(subsystem):
+    def addSubsystem(self,subsystem):
         self.subsystemList.append(subsystem)
-    def getSubsystem():
+    def getSubsystem(self):
         return self.subsystemList

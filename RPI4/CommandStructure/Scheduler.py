@@ -1,6 +1,6 @@
-import CommandStructure.Subsystem
-import CommandStructure.Command
-import CommandStructure.Trigger
+import CommandStructure.Subsystem as Subsystem
+import CommandStructure.Command as Command
+import CommandStructure.Trigger as Trigger
 
 class Scheduler:
     __instance = None
@@ -16,17 +16,17 @@ class Scheduler:
         return Scheduler.__instance
 
     def addSubsystem(self, subsystem):
-        if subsystem is Subsystem.Subsystem:
+        if isinstance(subsystem, Subsystem.Subsystem.Subsystem):
             self._subsystems.update({subsystem:None})
         else:
             print("A non subsystem was attempted to be added to the subsystem list")
-    def scheduleCommand(self, command):
-        if command is Command.Command:
+    def scheduleCommand(self, command): #logic verified
+        if isinstance(command, Command.Command.Command):
             self._toBeScheduledCommands.append(command)
         else:
             print("A non Command was attempted to be scheduled")
     def addTrigger(self,trigger):
-        if command is Trigger.Trigger and trigger.getCommand is Command.Command:
+        if isinstance(trigger,Trigger.Trigger.Trigger) and isinstance(trigger.getCommand(), Command.Command.Command) :
             self._triggers.append(trigger)
         else:
             print("A non Trigger was attempted to be added to the Trigger list")
@@ -60,6 +60,7 @@ class Scheduler:
             i.periodic()
         
         for i in self._triggers: #check trigger and if get() returns true, add to the schedule Command list
+            print ("ran trigger")
             if i.get():
                 self._toBeScheduledCommands.append(i.getCommand())
         """
@@ -70,26 +71,26 @@ class Scheduler:
             3- add commands to list (also )
             4- run commands
         """
-        for toBeScheduledCommand in self._toBeScheduledCommands:
+        for toBeScheduledCommand in self._toBeScheduledCommands: #logic verified
             commandAlreadyExist = False
+           
             for scheduledCommand in self._scheduledCommands: #check if command is already scheduled
-                if toBeScheduledCommand is scheduledCommand:
-                    self._toBeScheduledCommands.remove(scheduledCommand)
+                if isinstance(toBeScheduledCommand,type(scheduledCommand)) :
+                    self._toBeScheduledCommands.remove(toBeScheduledCommand)
                     commandAlreadyExist = True
                     break
-            if commandAlreadyExist:
-                continue
-            currentSubsystem = toBeScheduledCommand.getSubsystem()
-            if currentSubsystem is Subsystem.Subsystem: #check if Command requires a Subsystem
-                if toBeScheduledCommand in list(self._subsystems.values()): #check if required Subsystem is currently running a Command
-                    self.removeCommand(toBeScheduledCommand)
-                    self._subsystems[currentSubsystem] = toBeScheduledCommand
-            toBeScheduledCommand.initialise()
-            self._scheduledCommands.append(toBeScheduledCommand)
-        
+            if not commandAlreadyExist:
+                if isinstance(toBeScheduledCommand.getSubsystem(), Subsystem.Subsystem.Subsystem): #check if Command requires a Subsystem
+                    if toBeScheduledCommand in list(self._subsystems.values()): #check if required Subsystem is currently running a Command
+                        self.removeCommand(toBeScheduledCommand)
+                        self._subsystems[currentSubsystem] = toBeScheduledCommand
+                toBeScheduledCommand.initialise()
+                self._scheduledCommands.append(toBeScheduledCommand)
+                self._toBeScheduledCommands.remove(toBeScheduledCommand)
+
         for scheduledCommand in self._scheduledCommands: # run scheduled commands
             if scheduledCommand.isFinish(): # if command is finished, call end() and remove from the scheduled command list
-                self.removeCommand(scheduledCommand, True)
+                self.removeCommand(scheduledCommand, False)
             else:
                 scheduledCommand.execute()        
             

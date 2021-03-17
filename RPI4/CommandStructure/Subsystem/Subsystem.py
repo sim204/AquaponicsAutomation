@@ -2,6 +2,6 @@ class Subsystem:
     def __init__(self):
         pass
     
-    def periodic():
+    def periodic(self):
         pass
 
