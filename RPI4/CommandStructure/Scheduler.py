@@ -75,15 +75,21 @@ class Scheduler:
             commandAlreadyExist = False
            
             for scheduledCommand in self._scheduledCommands: #check if command is already scheduled
-                if isinstance(toBeScheduledCommand,type(scheduledCommand)) :
+                if toBeScheduledCommand == scheduledCommand:
                     self._toBeScheduledCommands.remove(toBeScheduledCommand)
                     commandAlreadyExist = True
                     break
             if not commandAlreadyExist:
-                if len(toBeScheduledCommand.getSubsystem()) != 0: #check if Command requires a Subsystem
-                    if toBeScheduledCommand in list(self._subsystems.values()): #check if required Subsystem is currently running a Command
-                        self.removeCommand(toBeScheduledCommand)
-                        self._subsystems[currentSubsystem] = toBeScheduledCommand
+                subsystemUsed = toBeScheduledCommand.getSubsystem()
+                currentSubsystems =  list(self._subsystems.keys())
+                if len(subsystemUsed) != 0 : #check if Command requires a Subsystem
+                    for i in subsystemUsed:
+                        if i is None:
+                            continue
+                        currentScheduledCommand = self._subsystems[i]
+                        if currentScheduledCommand is not None: #check if required Subsystem is currently running a Command
+                            self.removeCommand(self._subsystems[i])
+                        self._subsystems[i] = toBeScheduledCommand
                 toBeScheduledCommand.initialise()
                 self._scheduledCommands.append(toBeScheduledCommand)
                 self._toBeScheduledCommands.remove(toBeScheduledCommand)
