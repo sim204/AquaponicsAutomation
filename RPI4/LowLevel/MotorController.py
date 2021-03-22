@@ -13,11 +13,12 @@ class MotorController():
 
     def setPercentage(self, percentage):
         self.percentage=percentage
-        self.ENA.set(percentage)
         if percentage < 0:
+            self.ENA.set(-percentage)
             self.IN1.set(GPIO.LOW)
             self.IN2.set(GPIO.HIGH)
         else if percentage > 0:
+            self.ENA.set(percentage)
             self.IN1.set(GPIO.HIGH)
             self.IN2.set(GPIO.LOW)
     
