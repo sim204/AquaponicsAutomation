@@ -64,11 +64,11 @@ class Scheduler:
             if i.get():
                 self._toBeScheduledCommands.append(i.getCommand())
         """
-            1- check if command is already scheduled
-            2- Check if subsystem exist
-                2.1- if it does, check if subsystem is currently running a command
+            1- Check if command is already scheduled (memory reference is exactly the same)
+            2- Check if Command has subsystem requirements
+                2.1- if it so, check if subsystem exit and if it is currently running a command
                     2.1.1 - if so, remove interrupt current command and replace the command
-            3- add commands to list (also )
+            3- add commands to list
             4- run commands
         """
         for toBeScheduledCommand in self._toBeScheduledCommands: #logic verified
@@ -84,7 +84,7 @@ class Scheduler:
                 currentSubsystems =  list(self._subsystems.keys())
                 if len(subsystemUsed) != 0 : #check if Command requires a Subsystem
                     for i in subsystemUsed:
-                        if i is None:
+                        if i is None or not i in currentSubsystems: # if required subsystem is null or it doesn't exist, skip
                             continue
                         currentScheduledCommand = self._subsystems[i]
                         if currentScheduledCommand is not None: #check if required Subsystem is currently running a Command
