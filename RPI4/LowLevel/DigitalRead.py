@@ -6,5 +6,5 @@ class DigitalRead:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(channel, GPIO.IN)
-    def get():
+    def get(self):
         return GPIO.input(self.channel)

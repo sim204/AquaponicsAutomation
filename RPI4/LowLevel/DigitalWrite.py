@@ -6,5 +6,5 @@ class DigitalWrite:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(channel, GPIO.OUT)
-    def set(state):
+    def set(self, state):
         GPIO.output(self.channel, state)
