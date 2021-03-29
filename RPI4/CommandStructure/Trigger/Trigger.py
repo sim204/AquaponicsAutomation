@@ -3,5 +3,5 @@ class Trigger():
         self.command = command
     def get(value):
         raise NotImplementedError
-    def getCommand():
+    def getCommand(self):
         return self.command
