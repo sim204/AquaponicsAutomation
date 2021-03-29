@@ -1,16 +1,16 @@
 class Command:
     def __init__(self):
         self.subsystemList = []
-        pass
     def initialise(self):
-        pass
+        raise NotImplementedError
     def execute(self):
-        pass
+        raise NotImplementedError
     def isFinish(self):
-        pass
+        raise NotImplementedError
     def end(self,isInterrupt):
-        pass
+        raise NotImplementedError
     def addSubsystem(self,subsystem):
         self.subsystemList.append(subsystem)
     def getSubsystem(self):
         return self.subsystemList
+
