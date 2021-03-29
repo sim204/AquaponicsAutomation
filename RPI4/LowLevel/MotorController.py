@@ -21,6 +21,8 @@ class MotorController():
             self.ENA.set(percentage)
             self.IN1.set(GPIO.HIGH)
             self.IN2.set(GPIO.LOW)
+        else:
+            self.motorStop()
     
     def getPercentage(self):
         return self.percentage
