@@ -13,6 +13,6 @@ void loop()
   {
     Serial.println("a" + String(i) +": " + analogRead(analogPorts[i]));
   }
-  delay(500); // delay has to be the same as the RPI4
+  delay(100); // delay has to be the same as the RPI4
   Serial.flush();
 }
