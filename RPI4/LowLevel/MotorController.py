@@ -1,6 +1,7 @@
 import DigitalWrite     #Importe le fichier DigitalWrite
 import PWMWrite         #Importe le fichier PWMWrite
 import RPi.GPIO as GPIO #Importe le fichier travailler sur le PI
+import math
 
 #Cette classe sert a allumer ou eteindre chacun des moteurs du projet
 class MotorController():
@@ -15,23 +16,22 @@ class MotorController():
 
     #Controle la puissance des moteurs et leurs direction de rotation
     def setPercentage(self, percentage):
-        self.percentage=percentage
+        self.percentage = percentage
 
         #Si le pourcentage est sous 0, tourne pour aspirer l'eau
         if percentage < 0:
-            self.ENA.set(-percentage)   #Le moins est la pour avoir une valeur de puissance
             self.IN1.set(GPIO.LOW)
             self.IN2.set(GPIO.HIGH)
         
         #Si le pourcentage est au dessus de 0, tourne pour tirer de l'eau
         elif percentage > 0:
-            self.ENA.set(percentage)
             self.IN1.set(GPIO.HIGH)
             self.IN2.set(GPIO.LOW)
         
         #Si le pourcentage est egal a 0, eteint le moteur
         else:
             self.motorStop()
+        self.ENA.set(abs(percentage))
     
     #Retourne la valeur du pourcentage
     def getPercentage(self):
