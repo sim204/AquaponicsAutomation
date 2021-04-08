@@ -3,9 +3,9 @@ from LowLevel import AnalogRead #Importe le fichier AnalogRead
 from LowLevel import MotorController    #Importe le fichier MotorController
 
 class WaterLevel(Subsystem.Subsystem):
-    baseLength=1   #La valeur de la longueur de l'aquarium
-    baseWidth=1   #La valeur de la largeur de l'aquarium
-    baseArea = baseLength*baseWidth
+    baseLength=1  # To Change #La valeur de la longueur de l'aquarium en cm
+    baseWidth=1   # To Change #La valeur de la largeur de l'aquarium en cm
+    baseArea = baseLength*baseWidth # En cm^2
     
     #Définit les variables initiales nécessaires pour le programme
     def __init__(self):
@@ -22,7 +22,11 @@ class WaterLevel(Subsystem.Subsystem):
 
     #Lit le capteur du niveau d'eau et transforme la valeur
     def getLevel(self):
-        return self.analogPort.get()
+        # rate of change: -150.75 mm/V
+        # analog to volts = 1023/5V 
+        # constant: 629.01 mm
+        # Height (in mm) = -150.75*(1023*analog value/5) + 629.01
+        return -150.75*(1023*self.analogPort.get()/5) + 629.01 #To Adjust
 
     #Calcule le niveau d'eau dans l'aquarium
     def getVolume(self):
