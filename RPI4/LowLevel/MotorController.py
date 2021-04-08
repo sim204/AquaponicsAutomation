@@ -39,6 +39,6 @@ class MotorController():
 
     #Eteint le moteur
     def motorStop(self):
-        self.IN1.set(GPIO.LOW)
-        self.IN2.set(GPIO.LOW)
+        self.IN1.setState(GPIO.LOW)
+        self.IN2.setState(GPIO.LOW)
         self.percentage=0

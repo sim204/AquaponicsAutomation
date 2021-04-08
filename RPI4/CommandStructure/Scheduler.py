@@ -41,8 +41,15 @@ class Scheduler:
             self._scheduledCommands.remove(command)
         if command in self._toBeScheduledCommands:
             self._toBeScheduledCommands.remove(command)
-        if command.getSubsystem() is not None and command.getSubsystem() in list(self._subsystems.keys()) and command in list(self._subsystems.values()):
-            self._subsystems[command.getSubsystem()] = None
+            
+        if command.getSubsystem() is not None and command in list(self._subsystems.values()):
+            #command.getSubsystem() in list(self._subsystems.keys())
+            tempSchedulerKnownedSubsystems = list(self._subsystems.keys())
+            for requiredSubsystems in command.getSubsystem():
+                if requiredSubsystems in tempSchedulerKnownedSubsystems:
+                    self._subsystems[requiredSubsystems] = None
+            
+            
     
     def removeTrigger(self, trigger):
         if trigger in self._triggers:
@@ -60,7 +67,6 @@ class Scheduler:
             i.periodic()
         
         for i in self._triggers: #check trigger and if get() returns true, add to the schedule Command list
-            print ("ran trigger")
             if i.get():
                 self._toBeScheduledCommands.append(i.getCommand())
         """
@@ -73,7 +79,6 @@ class Scheduler:
         """
         for toBeScheduledCommand in self._toBeScheduledCommands: #logic verified
             commandAlreadyExist = False
-           
             for scheduledCommand in self._scheduledCommands: #check if command is already scheduled
                 if toBeScheduledCommand == scheduledCommand:
                     self._toBeScheduledCommands.remove(toBeScheduledCommand)
@@ -88,10 +93,12 @@ class Scheduler:
                             continue
                         currentScheduledCommand = self._subsystems[i]
                         if currentScheduledCommand is not None: #check if required Subsystem is currently running a Command
+                            print(self._subsystems[i])
                             self.removeCommand(self._subsystems[i])
                         self._subsystems[i] = toBeScheduledCommand
                 toBeScheduledCommand.initialise()
                 self._scheduledCommands.append(toBeScheduledCommand)
+                print(toBeScheduledCommand)
                 self._toBeScheduledCommands.remove(toBeScheduledCommand)
 
         for scheduledCommand in self._scheduledCommands: # run scheduled commands

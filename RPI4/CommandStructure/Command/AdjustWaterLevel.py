@@ -1,27 +1,35 @@
-from . import Command       #Importe le fichier Command
-from CommandStructure.Subsystem import WaterLevel   #Importe le fichier WaterLevel
-import time     #Importe le temps
+from . import Command       #Importe le module Command
+from CommandStructure.Subsystem import WaterLevel   #Importe le module WaterLevel
+import time
 
 #Cette classe sert à calculer les ajustements du niveau d'eau de l'aquarium
-class AdjustWaterLevel(Command):
+class AdjustWaterLevel(Command.Command):
+    idealWaterLevel = 768 #In cm
+    
     #Définit les variables initiales nécessaires pour le programme
-    def __init__(self,waterLevel):
+    def __init__(self, waterLevelSubsystem):
         super().__init__()  #Prend les attributs de la classe mere
-        self.waterLevel=waterLevel  #Prend la valeur du niveau d'eau de l'aquarium
-        self.minWater=20    #Est la valeur minimale que l'aquarium peut contenir en pouces
-
+        super().addSubsystem(waterLevelSubsystem) #
+        self.waterLevel = waterLevelSubsystem  #Prend une copie d'un instance de subsystem
+    
     #Initialise la commande quand elle est scheduled par le Scheduler
     def initialise(self):
-        self.tempsInitial=time.time()   #Prend le temps au moment où le Scheduler le demande
-        self.deltaTemps=self.minWater - self.waterLevel.getVolume()/(100/60)    #Le temps nécessaire pour remplir l'eau au niveau max
-    
+        
+        # Deadline = Time now + estimated time to fill
+        # Estimated time to fill = volume missing/Fill Rate
+        # Volume missing = missing height * base Area
+        # Fill rate (max pump flow)= 100mL / 60sec
+
+        self.deadLine = time.time() + 10# ((AdjustWaterLevel.idealWaterLevel - self.waterLevel.getLevel())*WaterLevel.WaterLevel.baseArea)/(100/60)
+        print("DeadLine :", self.deadLine - time.time())
+        
     #Execute l'ajout de l'eau avec les moteurs
     def execute(self):
         self.waterLevel.addWater(1)
     
     #Regarde si le niveau de l'eau est assez haut ou si trop de temps est passe depuis l'execution de l'eau
     def isFinish(self):
-        return (self.waterLevel.getLevel() > self.minWater) or (time.time() > (self.tempsInitial + self.deltaTemps))
+        return (self.waterLevel.getLevel() > AdjustWaterLevel.idealWaterLevel) or (time.time() > self.deadLine)
 
     #Eteint l'eau
     def end(self,isInterrupt):
