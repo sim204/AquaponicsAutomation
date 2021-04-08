@@ -1,26 +1,21 @@
 from CommandStructure import Scheduler
 from CommandStructure import Command
 from CommandStructure import Subsystem
+from LowLevel import Deserialise
+from LowLevel import MotorController
+from LowLevel import AnalogRead
 import time
 
 
 def main():
-    if False:
-        test = AnalogRead.AnalogRead(0)
-        test2 = Deserialise.Deserialise.getInstance()
-        test3 = PWMWrite.PWMWrite(17)
-        test4 = DigitalRead.DigitalRead(27)
-        while True:
-            for i in range(0,100,1):
-                test3.setDutyCycle(i/100)
-                time.sleep(0.01)
-            for i in range(100,0,-1):
-                test3.setDutyCycle(i/100)
-                time.sleep(0.01)
-    
+    test = MotorController.MotorController(15,18,14)
+    test2 = AnalogRead.AnalogRead(0)
+        
     while True:
-        #print(str(i) + ": ")
-        Scheduler.Scheduler.getInstance().run()
+        Deserialise.Deserialise.getInstance().update()
+        temp = float(((2*test2.get()-512)/1023) - 0.5)
+        test.setPercentage(temp)
+        print(temp)
         time.sleep(0.1)
         
 main()
