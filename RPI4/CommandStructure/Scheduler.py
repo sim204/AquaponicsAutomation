@@ -93,12 +93,10 @@ class Scheduler:
                             continue
                         currentScheduledCommand = self._subsystems[i]
                         if currentScheduledCommand is not None: #check if required Subsystem is currently running a Command
-                            print(self._subsystems[i])
                             self.removeCommand(self._subsystems[i])
                         self._subsystems[i] = toBeScheduledCommand
                 toBeScheduledCommand.initialise()
                 self._scheduledCommands.append(toBeScheduledCommand)
-                print(toBeScheduledCommand)
                 self._toBeScheduledCommands.remove(toBeScheduledCommand)
 
         for scheduledCommand in self._scheduledCommands: # run scheduled commands

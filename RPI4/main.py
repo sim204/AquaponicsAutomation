@@ -8,25 +8,23 @@ from LowLevel import Deserialise
 from LowLevel import MotorController
 from LowLevel import AnalogRead
 import time
+import RPi.GPIO as GPIO
 
 
 def main():
+    Deserialise.Deserialise.getInstance().update()
     WaterSubsystem = WaterLevel.WaterLevel()
     WaterCommand = AdjustWaterLevel.AdjustWaterLevel(WaterSubsystem)
     WaterTrig = WaterTrigger.WaterTrigger(WaterSubsystem,WaterCommand)
     Scheduler.Scheduler.getInstance().addSubsystem(WaterSubsystem)
     Scheduler.Scheduler.getInstance().addTrigger(WaterTrig)
-    
     previousTime = time.time()
-    i = 0
-    while time.time() - previousTime < 60:
+    
+    while True:
         Deserialise.Deserialise.getInstance().update()
         Scheduler.Scheduler.getInstance().run()
-        if i%10 == 0:
-            print("WaterLevel: ", WaterSubsystem.getLevel())
-            print("time: ", time.time()-previousTime)
-        i = i + 1
         time.sleep(0.1)
-        
-main()
-    
+try:
+    main()
+finally:
+    GPIO.cleanup()

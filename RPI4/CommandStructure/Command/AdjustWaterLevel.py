@@ -20,8 +20,7 @@ class AdjustWaterLevel(Command.Command):
         # Volume missing = missing height * base Area
         # Fill rate (max pump flow)= 100mL / 60sec
 
-        self.deadLine = time.time() + 10# ((AdjustWaterLevel.idealWaterLevel - self.waterLevel.getLevel())*WaterLevel.WaterLevel.baseArea)/(100/60)
-        print("DeadLine :", self.deadLine - time.time())
+        self.deadLine = time.time() + ((AdjustWaterLevel.idealWaterLevel - self.waterLevel.getLevel())*WaterLevel.WaterLevel.baseArea)/(100/60)
         
     #Execute l'ajout de l'eau avec les moteurs
     def execute(self):
