@@ -1,5 +1,4 @@
-#from . import Subsystem
-import Subsystem
+from . import Subsystem
 import glob
 import time
 """
@@ -14,7 +13,8 @@ class TemperatureLevel(Subsystem.Subsystem):
     def __init__(self):
         pass
     def periodic(self):
-        self.read_temp()
+        print(self.read_temp())
+        
     def read_temp_raw(self):
         f = open(TemperatureLevel.device_file, 'r')
         lines = f.readlines()
@@ -23,11 +23,12 @@ class TemperatureLevel(Subsystem.Subsystem):
 
     def read_temp(self):
         lines = self.read_temp_raw()
-        equals_pos = lines[1].find('t=')
-        if equals_pos != -1:
-            temp_string = lines[1][equals_pos+2:] #read the number starting from index equals_pos + 2 to the end of the line
-            temp_c = float(temp_string) / 1000.0
-            return temp_c
+        if lines[0].strip()[-3:] == 'YES':
+            equals_pos = lines[1].find('t=')
+            if equals_pos != -1:
+                temp_string = lines[1][equals_pos+2:] #read the number starting from index equals_pos + 2 to the end of the line
+                temp_c = float(temp_string) / 1000.0
+                return temp_c
 """def read_temp():
         lines = read_temp_raw()
         while lines[0].strip()[-3:] != 'YES': #take first line of the file, remove spaces, check if 3 last characters of line spells 'YES'
@@ -38,4 +39,4 @@ class TemperatureLevel(Subsystem.Subsystem):
             temp_string = lines[1][equals_pos+2:]
             temp_c = float(temp_string) / 1000.0
             return temp_c, temp_f
-    """
+"""

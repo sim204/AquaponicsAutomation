@@ -2,6 +2,7 @@ from CommandStructure import Scheduler
 from CommandStructure import Command
 from CommandStructure import Subsystem
 from CommandStructure.Subsystem import WaterLevel
+from CommandStructure.Subsystem import TemperatureLevel
 from CommandStructure.Command import AdjustWaterLevel
 from CommandStructure.Trigger import WaterTrigger
 from LowLevel import Deserialise
@@ -13,12 +14,17 @@ import RPi.GPIO as GPIO
 
 def main():
     Deserialise.Deserialise.getInstance().update()
+    
     WaterSubsystem = WaterLevel.WaterLevel()
+    TemperatureSubsystem = TemperatureLevel.TemperatureLevel()
+    
     WaterCommand = AdjustWaterLevel.AdjustWaterLevel(WaterSubsystem)
+    
     WaterTrig = WaterTrigger.WaterTrigger(WaterSubsystem,WaterCommand)
+    
     Scheduler.Scheduler.getInstance().addSubsystem(WaterSubsystem)
+    Scheduler.Scheduler.getInstance().addSubsystem(TemperatureSubsystem)
     Scheduler.Scheduler.getInstance().addTrigger(WaterTrig)
-    previousTime = time.time()
     
     while True:
         Deserialise.Deserialise.getInstance().update()
