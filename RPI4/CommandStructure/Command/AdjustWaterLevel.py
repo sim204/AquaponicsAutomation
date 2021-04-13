@@ -4,7 +4,7 @@ import time
 
 #Cette classe sert à calculer les ajustements du niveau d'eau de l'aquarium
 class AdjustWaterLevel(Command.Command):
-    idealWaterLevel = 768 #In cm
+    idealWaterLevel = 270 #In cm
     
     #Définit les variables initiales nécessaires pour le programme
     def __init__(self, waterLevelSubsystem):

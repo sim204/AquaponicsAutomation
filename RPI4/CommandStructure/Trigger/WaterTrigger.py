@@ -2,8 +2,8 @@ from . import Trigger
 import time
 
 class WaterTrigger(Trigger.Trigger):
-    minLevel = 730 # To Change #In cm
-    minDelayBetweenTriggers = 15   #To Change #In seconds 
+    minLevel = 200 # To Change #In cm
+    minDelayBetweenTriggers = 60   #To Change #In seconds 
     def __init__(self, subsystem, command):
         super().__init__(command)
         self.command = command
