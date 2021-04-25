@@ -2,7 +2,7 @@ from . import Trigger
 import time
 
 class WaterTrigger(Trigger.Trigger):
-    minLevel = 200 # To Change #In cm
+    minLevel = 225 # To Change #In cm
     minDelayBetweenTriggers = 60   #To Change #In seconds 
     def __init__(self, subsystem, command):
         super().__init__(command)
@@ -15,4 +15,5 @@ class WaterTrigger(Trigger.Trigger):
         self.cond = (self.waterLevel.getLevel() < WaterTrigger.minLevel) and (time.time() - self.startTime >= WaterTrigger.minDelayBetweenTriggers)
         if self.cond:
             self.startTime = time.time()
+        print("tried")
         return self.cond
