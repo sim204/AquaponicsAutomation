@@ -4,6 +4,7 @@ from CommandStructure import Subsystem
 from CommandStructure.Subsystem import WaterLevel
 from CommandStructure.Subsystem import LightLevel
 from CommandStructure.Command import AdjustWaterLevel
+from CommandStructure.Command import SendToDatabase
 from CommandStructure.Trigger import WaterTrigger
 from LowLevel import Deserialise
 from LowLevel import MotorController
@@ -18,6 +19,8 @@ def main():
     WaterSubsystem = WaterLevel.WaterLevel()
     LightSubsystem = LightLevel.LightLevel()
     
+    
+    DBCommand = SendToDatabase.SendToDatabase(WaterSubsystem,LightSubsystem)
     WaterCommand = AdjustWaterLevel.AdjustWaterLevel(WaterSubsystem)
     
     WaterTrig = WaterTrigger.WaterTrigger(WaterSubsystem,WaterCommand)
@@ -25,6 +28,7 @@ def main():
     Scheduler.Scheduler.getInstance().addSubsystem(WaterSubsystem)
     Scheduler.Scheduler.getInstance().addSubsystem(LightSubsystem)
     Scheduler.Scheduler.getInstance().addTrigger(WaterTrig)
+    Scheduler.Scheduler.getInstance().scheduleCommand(DBCommand)
     
     while True:
         Deserialise.Deserialise.getInstance().update()
