@@ -13,7 +13,8 @@ class LightLevel(Subsystem.Subsystem):
         self.i2cSensor = adafruit_veml7700.VEML7700(busio.I2C(board.SCL, board.SDA))
         pass
     def periodic(self):
-        print("lux: ",self.getLightLevel())
+        #print("lux: ",self.getLightLevel())
+        self.getLightLevel()
         
     def getLightLevel(self):
         return self.i2cSensor.lux 

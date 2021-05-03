@@ -1,5 +1,5 @@
-from . import Subsystem     #Importe le fichier Subsystem
-from LowLevel import AnalogRead #Importe le fichier AnalogRead
+from . import Subsystem     
+from LowLevel import AnalogRead
 from LowLevel import MotorController    #Importe le fichier MotorController
 
 class WaterLevel(Subsystem.Subsystem):
@@ -18,7 +18,8 @@ class WaterLevel(Subsystem.Subsystem):
         self.motorController=MotorController.MotorController(15,18,14)  #Est une instance de MotorControlle. Les chiffres sont les ports sur le PI
         
     def periodic(self):
-        print(self.sensorValues,self.getLevel())
+        #print(self.sensorValues,self.getLevel())
+        self.getLevel()
         pass
 
     #La methode servant à savoir si les moteurs doivent ajouter de l'eau ou non
@@ -27,21 +28,21 @@ class WaterLevel(Subsystem.Subsystem):
 
     #Lit le capteur du niveau d'eau et transforme la valeur
     def getLevel(self):
-        # rate of change: -150.75 mm/V
+        # rate of change: -155.3333 mm/V
         # analog to volts = 1023/5V 
-        # constant: 629.01 mm
-        # Height (in mm) = -150.75*(1023*analog value/5) + 629.01
+        # constant: 678.93333 mm
+        # Height (in mm) = -155.3333*(1023*analog value/5) + 678.93333
         self.sensorValues[self.iteration] = self.analogPort.get()
         sumation = 0
         for i in self.sensorValues:
             sumation = sumation + i
         sumation = sumation - min(self.sensorValues) - max(self.sensorValues)
         sumation = sumation/(len(self.sensorValues)-2)
-        temp = -155.3333*(5*sumation/1023) + 678.93333 #To Adjust
+        temp = -155.3333*(5*sumation/1023) + 678.93333 
         self.iteration = self.iteration + 1
         if self.iteration == len(self.sensorValues):
             self.iteration = 0
-        return temp #To Adjust
+        return temp
 
     #Calcule le niveau d'eau dans l'aquarium
     def getVolume(self):

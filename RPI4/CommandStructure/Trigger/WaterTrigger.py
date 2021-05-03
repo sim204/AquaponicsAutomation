@@ -12,8 +12,12 @@ class WaterTrigger(Trigger.Trigger):
         self.startTime = time.time()- WaterTrigger.minDelayBetweenTriggers + 5      
         
     def get(self):
-        self.cond = (self.waterLevel.getLevel() < WaterTrigger.minLevel) and (time.time() - self.startTime >= WaterTrigger.minDelayBetweenTriggers)
+        self.cond = (self.waterLevel.getLevel() > 0 and
+                     self.waterLevel.getLevel() < 300 and
+                    (self.waterLevel.getLevel() < WaterTrigger.minLevel) and 
+                    (time.time() - self.startTime >= WaterTrigger.minDelayBetweenTriggers)
+                    )
         if self.cond:
             self.startTime = time.time()
-        print("tried")
+        #print("tried")
         return self.cond

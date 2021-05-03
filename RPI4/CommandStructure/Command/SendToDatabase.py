@@ -35,7 +35,7 @@ class SendToDatabase(Command.Command):
         
     def execute(self):
         if time.time() > self.lastSentTimeStamp + SendToDatabase.sendDelay:
-            print("sent")
+#            print("sent")
             self.cursor.execute("INSERT INTO sensordata (TimeStamp,WaterLevel,WaterVolume,Light) VALUES(CURRENT_TIMESTAMP,?,?,?)",
             (self.waterSub.getLevel(),self.waterSub.getVolume(),self.lightSub.getLightLevel()))
             self.lastSentTimeStamp = time.time()
