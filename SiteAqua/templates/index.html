@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> {% block title %} Aquaponie {% endblock %} </title>
+    </head>
+    
+    <body>
+    {% block content %}
+        <h1>
+            Bienvenue au site d'aquaponie!
+        </h1>
+        <p>
+            Pour voir les donnees, cliquer Data.
+        </p>
+        <a href="/data">Data</a>
+    {% endblock %}
+
+    </body>
+</html>
