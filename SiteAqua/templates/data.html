@@ -6,18 +6,17 @@
   <h2>sensordata</h2>
   <table style="width:90%">
     <tr>
-      <th>TimeStamp</th>
-      <th>WaterLevel</th> 
-      <th>WaterVolume</th>
-      <th>Light</th>
+      {% for x in ligne1 %}
+      <th>{{x[0]}}</th>
+      {% endfor %}
     </tr>
     <!--matricedata est une variable envoye par flask dans app.py-->
-    {% for x in matricedata %}
+    {% for y in matricedata %}
       <tr>
-        <td>{{x[0]}}</td>
-        <td>{{x[1]}}</td>
-        <td>{{x[2]}}</td>
-        <td>{{x[3]}}</td>
+        <td>{{y[0]}}</td>
+        <td>{{y[1]}}</td>
+        <td>{{y[2]}}</td>
+        <td>{{y[3]}}</td>
       </tr>
     {% endfor %}
   </table>

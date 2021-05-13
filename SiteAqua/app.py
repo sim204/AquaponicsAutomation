@@ -11,6 +11,7 @@ connection = mariadb.connect(
     host = "127.0.0.1",
     port = 3306
 )
+cursor = connection.cursor()
 
 # premiere page html default
 app = Flask(__name__)
@@ -21,11 +22,14 @@ def index():
 # deuxieme page html qui affiche les donnees du database
 @app.route('/data')
 def data():
-    cursor = connection.cursor()
     cursor.execute("USE SensorData")
+
+    cursor.execute("Select column_name from information_schema.columns where table_name='sensordata'")
+    ligne1 = cursor.fetchall()
+
     cursor.execute("Select * From sensordata")
     matricedata = cursor.fetchall()
-    return render_template('data.html', matricedata = matricedata)# data.html aura acces a la variable matricedata
+    return render_template('data.html', ligne1 = cursor.fetchall(), matricedata = matricedata)# data.html aura acces aux variables ligne1 et matricedata
 
 if __name__ == "__main__":
     app.run(debug = True, host=address_ip)
