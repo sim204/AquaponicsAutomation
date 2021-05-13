@@ -29,7 +29,7 @@ def data():
 
     cursor.execute("Select * From sensordata")
     matricedata = cursor.fetchall()
-    return render_template('data.html', ligne1 = cursor.fetchall(), matricedata = matricedata)# data.html aura acces aux variables ligne1 et matricedata
+    return render_template('data.html', ligne1 = ligne1, matricedata = matricedata)# data.html aura acces aux variables ligne1 et matricedata
 
 if __name__ == "__main__":
     app.run(debug = True, host=address_ip)
