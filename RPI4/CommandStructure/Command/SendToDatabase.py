@@ -5,8 +5,14 @@ import mariadb
 
 class SendToDatabase(Command.Command):
     sendDelay = 1 #delay between database data in seconds
+
+    #Constructeur de SendToDatabase
+    #@param WaterSubsystem le subsystem de WaterLevel
+    #@param Lightsubsystem le subsystem de LightLevel
     def __init__(self, WaterSubsystem, LightSubsystem):
-        super().__init__()
+        super().__init__() #Prend les attributs de la classe mere
+
+        #Permet de se connecter à la base de donnees
         self.connection = mariadb.connect(
             user="pi",
             password = "password",
@@ -29,10 +35,11 @@ class SendToDatabase(Command.Command):
         self.waterSub = WaterSubsystem
         self.lightSub = LightSubsystem
     
-
+    #Initialise la base de donnees quand elle est scheduled par le Scheduler
     def initialise(self):
         self.lastSentTimeStamp = time.time()
-        
+    
+    #Si le temps est bon, envoie les donnees a la base de donnees
     def execute(self):
         if time.time() > self.lastSentTimeStamp + SendToDatabase.sendDelay:
 #            print("sent")
@@ -41,9 +48,11 @@ class SendToDatabase(Command.Command):
             self.lastSentTimeStamp = time.time()
             self.connection.commit()
     
+    #@return faux car la base de donnees doit rester active
     def isFinish(self):
         return False
 
+    #ferme la base de donnees
     def end(self,isInterrupt):
         self.connection.close()
         self.cursor.close()

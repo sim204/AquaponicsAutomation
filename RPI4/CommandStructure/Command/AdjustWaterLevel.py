@@ -6,7 +6,8 @@ import time
 class AdjustWaterLevel(Command.Command):
     idealWaterLevel = 250 #In cm
     
-    #Définit les variables initiales nécessaires pour le programme
+    #Constructeur de AdjustWaterLevel
+    #@param waterLevelSubsystem le subsystem de AdjustWaterLevel
     def __init__(self, waterLevelSubsystem):
         super().__init__()  #Prend les attributs de la classe mere
         super().addSubsystem(waterLevelSubsystem) #
