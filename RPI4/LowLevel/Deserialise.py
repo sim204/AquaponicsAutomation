@@ -71,12 +71,3 @@ class Deserialise:
         if Deserialise.__instance is None:
             Deserialise.__instance = Deserialise()
         return Deserialise.__instance
-#test/debug code
-if False:            
-    test = Deserialise.getInstance();
-
-    while True:
-        previousTime =  time.time()
-        test.printAll()
-        print("processingTime: "+ str(time.time()-previousTime))
-        time.sleep(0.5) #delay has to be the same as the arduino
