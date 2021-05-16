@@ -2,3 +2,4 @@ pyserial
 mariadb
 adafruit-circuitpython-veml7700
 RPi.GPIO
+Flask
