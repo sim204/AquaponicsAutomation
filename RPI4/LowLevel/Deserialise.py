@@ -2,13 +2,19 @@ import serial
 import time
 ANALOGPORTS = 6
 
+#Classe qui tranforme l'information du protocole Serial à des données que le code Python peut interpréter.
+#Note important quant à la convertion du protocole Serial à des données Python: le délai par cycle doit être le même que celui de l'Arduino
+#Ex: Si la période d'un cycle pour l'Arduino est 100ms, le PI doit avoir ce même période de cycle
+#Ceci peut être vu dans le fichier main
 class Deserialise:
     __instance = None
+    #Contructeur de la classe Deserialise
+    #Le constructeur établi la connection Serial entre l'Arduino et le PI
     def __init__(self):
         self.processedData = [None]*ANALOGPORTS
         try:
             self.arduino = serial.Serial('/dev/ttyACM0', 9600)
-            print("Connected to port0")
+            print("Connected to port0, Connecté au port0")
         except serial.SerialException as e:
             try:
                 self.arduino = serial.Serial('/dev/ttyACM1', 9600)
@@ -16,21 +22,21 @@ class Deserialise:
             except serial.SerialException as e:
                 print("Error! No serial connection. Please Check connection.")
                 self.arduino = None
-            
+    #Méthode qui lit une ligne du protocole Serial 
     def readLine(self):
         if (self.arduino is None):
             return None
         else:
             return self.arduino.readline()
-    """
-    Retrieves and refreshes stored values
-    """ 
+    #Mise à jour des données collectées du protocole Serial
     def update(self):
+
         rawdata = []
+        #Puisque chaque ligne correspond à un port, on prend sept ligne pour être sûr que tout les ports sont couvert
         for i in range(0,ANALOGPORTS+1):
             rawdata.append(str(self.readLine()))
-        #print(rawdata)
-            
+        
+        #Traitement des lignes reçues
         for line in rawdata:
             #print(line)
             indexCharPos = line.find('a')+1
@@ -47,21 +53,19 @@ class Deserialise:
                 
                 self.processedData[index] = num
     
-    """
-    Prints all value gathered by the serial communication
-    """
+    #affichages des données récoltées et traitées.
     def printAll(self):
         for i in self.processedData:
             print(i)
         #print(self.processedData[0])
    
-    """
-    :param port port number
-    :return value of port
-    """
+    #Donne la valeur lu d'un port Analog
+    #@param port le numéro du port voulu
+    #@return la valeur du port entre 0 et 1023 (0 étant 0 V et 1023 étant 5V)
     def readPort(self, port):
         return self.processedData[port]
-    
+
+    #@return une instance de cette classe
     @staticmethod 
     def getInstance():
         if Deserialise.__instance is None:
@@ -76,4 +80,3 @@ if False:
         test.printAll()
         print("processingTime: "+ str(time.time()-previousTime))
         time.sleep(0.5) #delay has to be the same as the arduino
-

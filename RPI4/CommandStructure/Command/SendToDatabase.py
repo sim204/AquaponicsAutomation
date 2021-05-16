@@ -47,4 +47,3 @@ class SendToDatabase(Command.Command):
     def end(self,isInterrupt):
         self.connection.close()
         self.cursor.close()
-
