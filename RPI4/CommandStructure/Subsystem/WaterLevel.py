@@ -3,7 +3,7 @@ from LowLevel import AnalogRead
 from LowLevel import MotorController
 
 #Classe qui relie le haut et bas niveau
-#Dans le cas de WaterLevel, elle gère le capteur de niveau d'eau et le contrôlleur de moteur qui contrôlle la pompe
+#Dans le cas de WaterLevel, elle gere le capteur de niveau d'eau et le contrôlleur de moteur qui controlle la pompe
 class WaterLevel(Subsystem.Subsystem):
     
     baseLength = 1 #La longueur de l'aquarium en mm
