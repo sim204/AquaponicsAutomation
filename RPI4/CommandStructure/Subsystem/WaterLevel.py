@@ -20,7 +20,7 @@ class WaterLevel(Subsystem.Subsystem):
         self.motorController=MotorController.MotorController(15,18,14) #Création d'un contrôlleur de moteur pour controller la pompe
     #mise à jour des valeurs de capteur de niveau d'eau
     def periodic(self):
-        #print(self.sensorValues,self.getLevel())
+        print(self.sensorValues,self.getLevel())
         self.getLevel()
         pass
 
@@ -46,7 +46,8 @@ class WaterLevel(Subsystem.Subsystem):
         sumation = sumation - min(self.sensorValues) - max(self.sensorValues)
         sumation = sumation/(len(self.sensorValues)-2) 
         
-        temp = -155.3333*(5*sumation/1023) + 678.93333 
+        #temp = -155.3333*(5*sumation/1023) + 678.93333
+        temp = sumation*5.0/1023.0
         
         self.iteration = self.iteration + 1
         if self.iteration == len(self.sensorValues):

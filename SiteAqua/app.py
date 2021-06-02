@@ -4,14 +4,6 @@ import mariadb
 
 address_ip = "10.150.141.102" # address ip du raspberry pi
 
-# connecter sur la database avec le python connector de mariadb
-connection = mariadb.connect(
-    user = "pi",
-    password = "password",
-    host = "127.0.0.1",
-    port = 3306
-)
-cursor = connection.cursor()
 
 # premiere page html default
 app = Flask(__name__)
@@ -22,6 +14,15 @@ def index():
 # deuxieme page html qui affiche les donnees du database
 @app.route('/data')
 def data():
+
+# connecter sur la database avec le python connector de mariadb
+connection = mariadb.connect(
+    user = "pi",
+    password = "password",
+    host = "127.0.0.1",
+    port = 3306
+)
+cursor = connection.cursor()
     cursor.execute("USE SensorData")
 
     cursor.execute("Select column_name from information_schema.columns where table_name='sensordata'")
