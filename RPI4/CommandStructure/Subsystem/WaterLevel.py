@@ -9,9 +9,9 @@ class WaterLevel(Subsystem.Subsystem):
     baseLength = 1 #La longueur de l'aquarium en mm
     baseWidth = 1.478 #La largeur de l'aquarium en mm
     baseArea = baseLength*baseWidth # l'aire de la base de l'aquarium en mm^2
-    xValue = [4.098113,4.07625,4.071358,4.05181,4.0271,3.9932,3.97849,3.69013,3.63636,3.55327,3.5109,3.45552,3.35777,3.24047,3.17693,3.11828,2.96188,2.67351,2.50733]
-    yValue = [0,30,40,60,80,100,120,140,150,160,180,200,220,240,263,290]
-
+    xValue = [4.098113,4.07625,4.071358,4.05181,4.0271,3.97849,3.69013,3.63636,3.55327,3.45552,3.35777,3.24047,3.11828,2.96188,2.67351,2.50733]
+    #yValue = [0,30,40,60,80,100,120,140,150,160,180,200,220,240,263,290]
+    yValue = [0,40,50,70,90,110,130,150,160,170,190,210,230,250,273,300]
     #Constructeur de WaterLevel
     def __init__(self):
         #super().__init__()
@@ -20,7 +20,7 @@ class WaterLevel(Subsystem.Subsystem):
         self.iteration = 0 #compteur pour le filtre de capteur
         self.sensorValues = [temp,temp,temp,temp,temp,temp,temp] #données récoltées pour le filtre de capteur
         self.motorController=MotorController.MotorController(15,18,14) #Création d'un contrôlleur de moteur pour controller la pompe
-        self.VoltToMM = LinearInterpolation.LinearInterpolation(xValue,yValue)
+        self.VoltToMM = LinearInterpolation.LinearInterpolation(WaterLevel.xValue, WaterLevel.yValue)
     #mise à jour des valeurs de capteur de niveau d'eau
     def periodic(self):
         print(self.sensorValues,self.getLevel())

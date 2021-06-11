@@ -3,14 +3,16 @@
     <head>
         <title> {% block title %} Aquaponie {% endblock %} </title>
     </head>
-    
     <body>
     {% block content %}
         <h1>
             Bienvenue au site d'aquaponie!
         </h1>
+        <form method = "POST">
+            <p>Date(ex: 2021-06-02) <input type = "text" name = "Field1_name" /> <input type = "submit" value = "Enter" /></p>
+        </form>
         <p>
-            Pour voir les donnees, cliquer Data.
+            Pour voir les donnees depuis {{form_data}}, cliquez sur Data.
         </p>
         <a href="/data">Data</a>
     {% endblock %}
