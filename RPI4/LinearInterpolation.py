@@ -15,11 +15,14 @@ class LinearInterpolation():
         else:
             for i in range(0,len(self._xArray)-2,1):
                 
-                if self._xArray[i] > x and x > self._xArray[i+1]:
-                    print(self._xArray[i] ," < ",x," < ", self._xArray[i+1])
+                if self._xArray[i] > x and x > self._xArray[i+1] or (self._xArray[i+1] ==x or x==self._xArray[i]):
+                    #print(self._xArray[i] ," < ",x," < ", self._xArray[i+1])
                     y = self.lerp (self._xArray[i],self._xArray[i+1], self._yArray[i],self._yArray[i+1], x)
+                    break
+        if y ==0:
+            print("y = 0")
         return y
         
     def lerp(self,x1,x2,y1,y2,x):
-        return (y2 - y1) / (x2 - x1) * (x - x1) + y1 
+        return float((y2 - y1) / (x2 - x1) * (x - x1) + y1)
 
