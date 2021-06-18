@@ -1,6 +1,6 @@
 import serial
 import time
-ANALOGPORTS = 6
+ANALOGPORTS = 7
 
 #Classe qui tranforme l'information du protocole Serial à des données que le code Python peut interpréter.
 #Note important quant à la convertion du protocole Serial à des données Python: le délai par cycle doit être le même que celui de l'Arduino
