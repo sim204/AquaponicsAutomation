@@ -26,7 +26,7 @@ class WaterLevel(Subsystem.Subsystem):
     #Constructeur de WaterLevel
     def __init__(self):
         #super().__init__()
-        self.analogPort=AnalogRead.AnalogRead(0) #Création d'un port analogue au port 0
+        self.analogPort=AnalogRead.AnalogRead(7) #Création d'un port analogue au port 0
         temp = self.analogPort.get()
         self.iteration = 0 #compteur pour le filtre de capteur
         self.sensorValues = [temp,temp,temp,temp,temp,temp,temp] #données récoltées pour le filtre de capteur
@@ -66,7 +66,7 @@ class WaterLevel(Subsystem.Subsystem):
         if self.iteration == len(self.sensorValues):
             self.iteration = 0
         
-        print(voltage)
+        print(sumation)
         return temp
 
     #@return le volume estimée de l'aquarium en mm^3
