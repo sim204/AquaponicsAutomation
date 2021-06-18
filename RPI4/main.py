@@ -17,18 +17,18 @@ def main():
     Deserialise.Deserialise.getInstance().update()
     
     WaterSubsystem = WaterLevel.WaterLevel()
-    LightSubsystem = LightLevel.LightLevel()
+    #LightSubsystem = LightLevel.LightLevel()
     
     
-    DBCommand = SendToDatabase.SendToDatabase(WaterSubsystem,LightSubsystem)
+    #DBCommand = SendToDatabase.SendToDatabase(WaterSubsystem,LightSubsystem)
     WaterCommand = AdjustWaterLevel.AdjustWaterLevel(WaterSubsystem)
     
     WaterTrig = WaterTrigger.WaterTrigger(WaterSubsystem,WaterCommand)
     
     Scheduler.Scheduler.getInstance().addSubsystem(WaterSubsystem)
-    Scheduler.Scheduler.getInstance().addSubsystem(LightSubsystem)
+    #Scheduler.Scheduler.getInstance().addSubsystem(LightSubsystem)
     Scheduler.Scheduler.getInstance().addTrigger(WaterTrig)
-    Scheduler.Scheduler.getInstance().scheduleCommand(DBCommand)
+    #Scheduler.Scheduler.getInstance().scheduleCommand(DBCommand)
     
     while True:
         Deserialise.Deserialise.getInstance().update()
