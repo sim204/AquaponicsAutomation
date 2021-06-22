@@ -17,7 +17,7 @@ void loop()
   {
     //Serial.println("a" + String(i) +": " + analogRead(analogPorts[i]));
   }
-  Serial.println("a"+ String(ports) +": " + (238.5-getDistance()));
+  Serial.println("a"+ String(ports) +": " + getDistance());
   delay(100); // delay has to be the same as the RPI4
   Serial.flush();
 }
