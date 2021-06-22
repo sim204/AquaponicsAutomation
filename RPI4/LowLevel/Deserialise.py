@@ -30,28 +30,32 @@ class Deserialise:
             return self.arduino.readline()
     #Mise à jour des données collectées du protocole Serial
     def update(self):
-
         rawdata = []
         #Puisque chaque ligne correspond à un port, on prend sept ligne pour être sûr que tout les ports sont couvert
         for i in range(0,ANALOGPORTS+1):
             rawdata.append(str(self.readLine()))
-        
         #Traitement des lignes reçues
         for line in rawdata:
             #print(line)
+            floatingPoint = 0
             indexCharPos = line.find('a')+1
             startCharPos = line.find(' ')+1
             if indexCharPos != 0 and startCharPos != 0 and line[indexCharPos].isdigit() and line[startCharPos].isdigit():
                 index = int(line[indexCharPos])
                 num = 0
                 j = startCharPos
-                while line[j].isdigit():
+                while (line[j].isdigit()):# or line[j] == '.'):
+                    #if line[j] == '.':
+                    #    floatingPoint = j - startCharPos-1
+                    #    j = j + 1
+                    #    continue
                     num = num*10
                     num = num + int(line[j])
                     #print(int(line[j]), end="")
                     j = j + 1
                 
-                self.processedData[index] = num
+                self.processedData[index] = num*pow(10,-floatingPoint)
+
     
     #affichages des données récoltées et traitées.
     def printAll(self):
