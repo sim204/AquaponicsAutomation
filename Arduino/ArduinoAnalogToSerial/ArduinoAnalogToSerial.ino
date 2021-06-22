@@ -15,7 +15,7 @@ void loop()
 {
   for(int i = 0; i<ports;i++)
   {
-    //Serial.println("a" + String(i) +": " + analogRead(analogPorts[i]));
+    Serial.println("a" + String(i) +": " + analogRead(analogPorts[i]));
   }
   Serial.println("a"+ String(ports) +": " + getDistance());
   delay(100); // delay has to be the same as the RPI4
