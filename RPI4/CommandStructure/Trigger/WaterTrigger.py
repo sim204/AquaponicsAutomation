@@ -3,7 +3,7 @@ import time
 #Classe qui appelle automatiquement le Command AdjustWaterLevel
 #Cette classe hérite de Trigger
 class WaterTrigger(Trigger.Trigger):
-    minLevel = 225 #le niveau d'eau minimale en mm
+    minLevel = 145 #le niveau d'eau minimale en mm
     minDelayBetweenTriggers = 60 #Le délai entre deux activations en seconde
     
     #Le constructeur de WaterTrigger 
