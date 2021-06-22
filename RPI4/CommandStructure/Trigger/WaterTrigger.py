@@ -4,7 +4,7 @@ import time
 #Cette classe hérite de Trigger
 class WaterTrigger(Trigger.Trigger):
     minLevel = 145 #le niveau d'eau minimale en mm
-    minDelayBetweenTriggers = 60 #Le délai entre deux activations en seconde
+    minDelayBetweenTriggers = 30*60 #Le délai entre deux activations en secondes
     
     #Le constructeur de WaterTrigger 
     #@param subsystem Instance de WaterLevel

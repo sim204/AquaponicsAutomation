@@ -4,7 +4,7 @@ import mariadb
 
 
 class SendToDatabase(Command.Command):
-    sendDelay = 1 #delay between database data in seconds
+    sendDelay = 3*60 #delay between database data in seconds
 
     #Constructeur de SendToDatabase
     #@param WaterSubsystem le subsystem de WaterLevel
