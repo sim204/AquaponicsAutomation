@@ -6,10 +6,10 @@ import LinearInterpolation
 #Dans le cas de WaterLevel, elle gere le capteur de niveau d'eau et le contrôlleur de moteur qui controlle la pompe
 class WaterLevel(Subsystem.Subsystem):
     
-    baseLength = 6 #La longueur de l'aquarium en cm
-    baseWidth = 30 #La largeur de l'aquarium en cm
+    baseLength = 30.8 #La longueur de l'aquarium en cm
+    baseWidth = 75.8 #La largeur de l'aquarium en cm
     baseArea = baseLength*baseWidth # l'aire de la base de l'aquarium en cm^2
-    baseUltrasonicOffset = 191
+    baseUltrasonicOffset = 366+69
     #Constructeur de WaterLevel
     def __init__(self):
         #super().__init__()
@@ -38,8 +38,6 @@ class WaterLevel(Subsystem.Subsystem):
         #Elle rejette la valeur la plus grande et la valeur la plus petite et elle fait la moyenne des cinq restants
         sumation = 0
         for i in self.sensorValues:
-            if i is None:
-                i = 0
             sumation = sumation + i
         sumation = sumation - min(self.sensorValues) - max(self.sensorValues)
         sumation = sumation/(len(self.sensorValues)-2) 

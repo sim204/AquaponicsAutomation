@@ -14,6 +14,7 @@ import RPi.GPIO as GPIO
 
 
 def main():
+    time.sleep(10.0)
     Deserialise.Deserialise.getInstance().update()
     
     WaterSubsystem = WaterLevel.WaterLevel()
