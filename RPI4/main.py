@@ -37,5 +37,7 @@ def main():
         time.sleep(0.1)
 try:
     main()
+except KeyboardInterrupt:
+    exit()
 finally:
     GPIO.cleanup()

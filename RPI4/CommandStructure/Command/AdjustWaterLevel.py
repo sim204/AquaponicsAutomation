@@ -4,7 +4,7 @@ import time
 
 #Cette classe sert à calculer les ajustements du niveau d'eau de l'aquarium
 class AdjustWaterLevel(Command.Command):
-    idealWaterLevel = 385.0 #In mm
+    idealWaterLevel = 340.0 #In mm
     
     #Constructeur de AdjustWaterLevel
     #@param waterLevelSubsystem le subsystem de AdjustWaterLevel

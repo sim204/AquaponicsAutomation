@@ -2,9 +2,9 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import time
 import mariadb
+import socket
 
-
-address_ip = "10.150.141.102" # address ip du raspberry pi
+address_ip = "10.150.132.42"# address ip du raspberry pi
 app = Flask(__name__)
 
 

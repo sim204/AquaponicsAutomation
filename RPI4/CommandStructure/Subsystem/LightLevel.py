@@ -17,6 +17,7 @@ class LightLevel(Subsystem.Subsystem):
     def periodic(self):
         #print("lux: ",self.getLightLevel())
         self.getLightLevel()
+        pass
     
     #@return la valeur du niveau de la lumiere en lux
     def getLightLevel(self):

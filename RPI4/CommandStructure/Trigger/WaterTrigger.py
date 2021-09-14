@@ -3,7 +3,7 @@ import time
 #Classe qui appelle automatiquement le Command AdjustWaterLevel
 #Cette classe hérite de Trigger
 class WaterTrigger(Trigger.Trigger):
-    minLevel = 360 #le niveau d'eau minimale en mm
+    minLevel = 300 #le niveau d'eau minimale en mm
     minDelayBetweenTriggers = 30*60 #Le délai entre deux activations en secondes
     
     #Le constructeur de WaterTrigger 
@@ -17,8 +17,8 @@ class WaterTrigger(Trigger.Trigger):
         self.startTime = time.time()- WaterTrigger.minDelayBetweenTriggers + 5      
     #@return s'il faut appeller le Command pour activer l'ajustement de niveau d'eau
     def get(self):
-        self.cond = (self.waterLevel.getLevel() > 300 and #vérification s'il y a une lecture valide du capteur
-                     self.waterLevel.getLevel() < 385 and #vérification s'il y a une lecture valide du capteur
+        self.cond = (self.waterLevel.getLevel() > 250 and #vérification s'il y a une lecture valide du capteur
+                     self.waterLevel.getLevel() < 350 and #vérification s'il y a une lecture valide du capteur
                     (self.waterLevel.getLevel() < WaterTrigger.minLevel) and #vérification du niveau d'eau
                     (time.time() - self.startTime >= WaterTrigger.minDelayBetweenTriggers) #vérification du délai d'activation
                     )
